@@ -1,7 +1,8 @@
 from cassandra.cluster import Cluster
 import os
 import sys
-print ("Bienvenido al script de administracion de Cassandra")
+from termcolor import colored
+print colored('Bienvenido al script de administracion de Cassandra','green')
 ip  = raw_input("Seleccione la ip de su servidor: ")
 puerto = raw_input("Seleccione el puerto de su servidor (por defecto 9042): ")
 cluster = Cluster(contact_points=[ip],port=puerto)
@@ -21,10 +22,10 @@ if session:
         print ""
     seleccionarKeyspace = raw_input("Seleccionar la keyspace con la que se va a trabajar: ")
     session.set_keyspace(seleccionarKeyspace)
-    verdatos = raw_input("Desea ver los datos?")
+    verdatos = raw_input("Desea ver los datos?(s/n)")
     if verdatos == 's':
-        tabla = raw_input("Seleccione el nombre de la tabla")
+        tabla = raw_input("Seleccione el nombre de la tabla: ")
         datos = session.execute("SELECT * FROM " + tabla + ";")
         print datos[0]
 else:
-    print ("Error al conectar a Cassandra")
+    print colored("Error al conectar a Cassandra",'red')
